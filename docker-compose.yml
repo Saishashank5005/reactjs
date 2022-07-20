@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+
+
+  frontend:
+    image: sheshuvalandas/frontend
+    container_name: frontend
+    stdin_open: true
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - backend
+    environment:
+      - CONTAINER_NAME=http://backend:8080
+
+  backend:
+    image: sheshuvalandas/backend
+    container_name: backend
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - postgres
+    environment:
+      - PGDATABASE=loizenaidb
+      - PGUSER=postgres
+      - PGPASS=234
+      - PGHOST=postgres
+      - PGDIALECT=postgres
+
+
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_PASSWORD: 234
+      POSTGRES_USER: postgres
+      POSTGRES_DB: loizenaidb
+
